@@ -12,7 +12,7 @@ const Hero = () => {
             Workout Library
           </p>
 
-          <h1 className="font-display text-4xl leading-none font-bold tracking-[-1px] text-white uppercase sm:text-5xl lg:text-[60px] lg:tracking-[-1.5px]">
+          <h1 className="font-display text-[32px] leading-none font-bold tracking-[-1px] text-white uppercase sm:text-5xl lg:text-[60px] lg:tracking-[-1.5px]">
             Train with intent. Log <br />
             every set.
           </h1>
