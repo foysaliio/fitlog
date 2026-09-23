@@ -1,8 +1,8 @@
 const Home = () => {
   return (
-    <>
-      <main>FitLog</main>
-    </>
+    <main className="min-h-screen">
+      
+    </main>
   );
 };
 

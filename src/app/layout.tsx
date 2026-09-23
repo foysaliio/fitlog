@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
 import "./globals.css";
 import ToasterProvider from "@/components/ToasterProvider";
+import Navbar from "@/components/layout/Navbar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,7 +16,7 @@ const oswald = Oswald({
 
 export const metadata: Metadata = {
   title: {
-    default: "FitLog — Workout Library",
+    default: "FitLog - Workout Library",
     template: "%s | FitLog",
   },
   description:
@@ -31,7 +32,8 @@ export default function RootLayout({
       data-theme="light"
       className={`${inter.variable} ${oswald.variable} h-full antialiased`}
     >
-      <body className="min-h-screen bg-base-100 font-sans text-base-content antialiased">
+      <body className="min-h-screen font-sans antialiased">
+        <Navbar />
         {children}
         <ToasterProvider />
       </body>

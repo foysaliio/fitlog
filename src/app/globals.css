@@ -6,8 +6,25 @@
 @theme inline {
   --font-sans: var(--font-inter);
   --font-display: var(--font-oswald);
+
+  --color-fit-bg: #0f1115;
+  --color-fit-surface: #15171d;
+  --color-fit-surface-alt: #1b1f28;
+  --color-fit-border: #232732;
+
+  --color-fit-accent: #ccff00;
+  --color-fit-accent-alt: #c2f800;
+
+  --color-fit-text: #ffffff;
+  --color-fit-muted: #9ca3af;
+  --color-fit-muted-light: #d1d5db;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-fit-bg);
+  color: var(--color-fit-text);
 }
