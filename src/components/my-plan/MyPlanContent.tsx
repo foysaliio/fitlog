@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ChevronDown, Check } from "lucide-react";
 
 import { useWorkout } from "@/context/WorkoutContext";
 import MyPlanWorkoutCard from "./MyPlanWorkoutCard";
 
 type PlanTab = "plan" | "saved";
+
+type SortOption = "duration" | "calories" | "rating";
 
 interface MyPlanContentProps {
   initialTab: PlanTab;
@@ -16,6 +20,16 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
   const router = useRouter();
 
   const { plan, saved } = useWorkout();
+
+  const [sortBy, setSortBy] = useState<SortOption>("duration");
+
+  const [isSortOpen, setIsSortOpen] = useState(false);
+
+  const sortLabels: Record<SortOption, string> = {
+    duration: "Duration",
+    calories: "Calories",
+    rating: "Rating",
+  };
 
   const activeTab = initialTab;
 
@@ -33,6 +47,19 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
     (total, workout) => total + workout.caloriesBurned,
     0,
   );
+
+  // Sort a copied array so context state is never mutated
+  const sortedWorkouts = [...activeWorkouts].sort((a, b) => {
+    if (sortBy === "duration") {
+      return a.duration - b.duration;
+    }
+
+    if (sortBy === "calories") {
+      return a.caloriesBurned - b.caloriesBurned;
+    }
+
+    return b.rating - a.rating;
+  });
 
   const handleTabChange = (tab: PlanTab) => {
     router.replace(`/my-plan?tab=${tab}`, {
@@ -84,32 +111,99 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
           </div>
         </section>
 
-        {/* Tabs */}
-        <div className="mt-6 flex">
-          <div className="flex items-center gap-1 rounded-lg bg-[#151921] p-1">
-            <button
-              type="button"
-              onClick={() => handleTabChange("plan")}
-              className={`h-8 rounded-md px-4 text-xs font-medium transition-colors ${
-                activeTab === "plan"
-                  ? "bg-[#1a2312] text-fit-accent-alt"
-                  : "text-[#8a92a0] hover:text-white"
-              }`}
-            >
-              Today&apos;s Plan
-            </button>
+        {/* Tabs and Sort */}
+        {/* Tabs and Sort */}
+        <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          {/* Tabs */}
+          <div className="flex">
+            <div className="flex items-center gap-1 rounded-lg bg-[#151921] p-1">
+              <button
+                type="button"
+                onClick={() => handleTabChange("plan")}
+                className={`h-8 rounded-md px-4 text-xs font-medium transition-colors ${
+                  activeTab === "plan"
+                    ? "bg-[#1a2312] text-fit-accent-alt"
+                    : "text-[#8a92a0] hover:text-white"
+                }`}
+              >
+                Today&apos;s Plan
+              </button>
 
-            <button
-              type="button"
-              onClick={() => handleTabChange("saved")}
-              className={`h-8 rounded-md px-4 text-xs font-medium transition-colors ${
-                activeTab === "saved"
-                  ? "bg-[#1a2312] text-fit-accent-alt"
-                  : "text-[#8a92a0] hover:text-white"
-              }`}
-            >
-              Saved
-            </button>
+              <button
+                type="button"
+                onClick={() => handleTabChange("saved")}
+                className={`h-8 rounded-md px-4 text-xs font-medium transition-colors ${
+                  activeTab === "saved"
+                    ? "bg-[#1a2312] text-fit-accent-alt"
+                    : "text-[#8a92a0] hover:text-white"
+                }`}
+              >
+                Saved
+              </button>
+            </div>
+          </div>
+
+          {/* Sort */}
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-medium text-fit-muted-light">
+              Sort By
+            </span>
+
+            <div className="relative w-57.5">
+              <button
+                type="button"
+                onClick={() => setIsSortOpen((prev) => !prev)}
+                className={`flex h-10 w-full items-center justify-between rounded-xl border px-4 text-sm transition ${
+                  isSortOpen
+                    ? "border-[#4b5563] bg-[#171a21]"
+                    : "border-[#343944] bg-[#111318]"
+                }`}
+              >
+                <span className="font-medium text-[#e5e7eb]">
+                  {sortLabels[sortBy]}
+                </span>
+
+                <ChevronDown
+                  size={15}
+                  className={`text-fit-muted transition-transform ${
+                    isSortOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isSortOpen && (
+                <div className="absolute right-0 top-[calc(100%+6px)] z-40 w-full overflow-hidden rounded-xl border border-[#343944] bg-[#171a21] shadow-xl">
+                  {(["duration", "calories", "rating"] as SortOption[]).map(
+                    (option, index) => {
+                      const isSelected = sortBy === option;
+
+                      return (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => {
+                            setSortBy(option);
+                            setIsSortOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between px-4 py-3 text-left text-sm transition-colors ${
+                            index !== 0 ? "border-t border-[#272b34]" : ""
+                          } ${
+                            isSelected
+                              ? "bg-[#1a2312] text-fit-accent-alt"
+                              : "text-fit-muted-light hover:bg-[#1d2028] hover:text-white"
+                          }`}
+                        >
+                          <span>{sortLabels[option]}</span>
+
+                          {isSelected && <Check size={15} strokeWidth={2.2} />}
+                        </button>
+                      );
+                    },
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -134,7 +228,7 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
             </div>
           ) : (
             <div className="space-y-4">
-              {activeWorkouts.map((workout) => (
+              {sortedWorkouts.map((workout) => (
                 <MyPlanWorkoutCard
                   key={workout.id}
                   workout={workout}
