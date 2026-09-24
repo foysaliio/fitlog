@@ -1,5 +1,7 @@
 "use client";
 
+import { useWorkout } from "@/context/WorkoutContext";
+
 import { Dumbbell } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,9 +9,10 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
 
-  // Temporary values. Later these will come from Context API.
-  const planCount = 0;
-  const savedCount = 0;
+  const { plan, saved } = useWorkout();
+
+  const planCount = plan.length;
+  const savedCount = saved.length;
 
   const isWorkoutActive = pathname === "/" || pathname.startsWith("/workouts");
 

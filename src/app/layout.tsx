@@ -3,6 +3,7 @@ import { Inter, Oswald } from "next/font/google";
 import "./globals.css";
 import ToasterProvider from "@/components/ToasterProvider";
 import Navbar from "@/components/layout/Navbar";
+import { WorkoutProvider } from "@/context/WorkoutContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,8 +34,10 @@ export default function RootLayout({
       className={`${inter.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-screen font-sans antialiased">
-        <Navbar />
-        {children}
+        <WorkoutProvider>
+          <Navbar />
+          {children}
+        </WorkoutProvider>
         <ToasterProvider />
       </body>
     </html>

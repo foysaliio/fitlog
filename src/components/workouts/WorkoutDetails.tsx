@@ -1,7 +1,7 @@
-import { Bookmark, Plus } from "lucide-react";
 import Image from "next/image";
 
 import type { Workout } from "@/types/workout";
+import WorkoutActions from "./WorkoutActions";
 
 interface WorkoutDetailsProps {
   workout: Workout;
@@ -95,23 +95,7 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
           </div>
 
           {/* Actions */}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <button
-              type="button"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-fit-accent px-6 text-sm font-semibold text-fit-bg transition hover:brightness-95"
-            >
-              <Plus size={16} />
-              Add to today&apos;s plan
-            </button>
-
-            <button
-              type="button"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#374151] px-6 text-sm font-medium text-[#e5e7eb] transition hover:border-fit-muted hover:text-white"
-            >
-              <Bookmark size={16} />
-              Save for later
-            </button>
-          </div>
+          <WorkoutActions workout={workout} />
         </div>
       </div>
     </main>
