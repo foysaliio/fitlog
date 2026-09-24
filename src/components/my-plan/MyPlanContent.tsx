@@ -19,17 +19,20 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
 
   const activeTab = initialTab;
 
-  const totalMinutes = plan.reduce(
+  // Active tab wise workout list
+  const activeWorkouts = activeTab === "plan" ? plan : saved;
+
+  // Active tab wise total minutes
+  const totalMinutes = activeWorkouts.reduce(
     (total, workout) => total + workout.duration,
     0,
   );
 
-  const totalCalories = plan.reduce(
+  // Active tab wise total calories
+  const totalCalories = activeWorkouts.reduce(
     (total, workout) => total + workout.caloriesBurned,
     0,
   );
-
-  const activeWorkouts = activeTab === "plan" ? plan : saved;
 
   const handleTabChange = (tab: PlanTab) => {
     router.replace(`/my-plan?tab=${tab}`, {
@@ -58,7 +61,7 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
             <p className="text-xs text-[#8a92a0]">Exercises</p>
 
             <p className="mt-1 font-display text-4xl font-bold text-fit-accent">
-              {plan.length}
+              {activeWorkouts.length}
             </p>
           </div>
 
