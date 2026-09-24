@@ -52,17 +52,17 @@ const MyPlanWorkoutCard = ({ workout, variant }: MyPlanWorkoutCardProps) => {
 
           {/* Stats */}
           <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-fit-muted">
-            <span className="flex items-center gap-1.5">
+            <span className="flex text-slate-300 items-center gap-1.5">
               <Clock3 className="text-fit-accent" size={14} strokeWidth={1.7} />
               {workout.duration} min
             </span>
 
-            <span className="flex items-center gap-1.5">
+            <span className="flex text-slate-300 items-center gap-1.5">
               <Flame className="text-fit-accent" size={14} strokeWidth={1.7} />
               {workout.caloriesBurned} kcal
             </span>
 
-            <span className="flex items-center gap-1.5">
+            <span className="flex text-slate-300 items-center gap-1.5">
               <Star className="text-fit-accent" size={14} strokeWidth={1.7} />
               {workout.rating}
             </span>
@@ -100,7 +100,7 @@ const MyPlanWorkoutCard = ({ workout, variant }: MyPlanWorkoutCardProps) => {
           type="button"
           onClick={handleRemove}
           aria-label={`Remove ${workout.name}`}
-          className="inline-flex size-7 items-center justify-center text-fit-muted transition hover:text-white"
+          className="inline-flex size-7 items-center cursor-pointer justify-center text-fit-muted transition hover:text-white"
         >
           <X size={16} />
         </button>

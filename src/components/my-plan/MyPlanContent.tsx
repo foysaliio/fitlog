@@ -152,7 +152,7 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
               <button
                 type="button"
                 onClick={() => handleTabChange("plan")}
-                className={`h-8 rounded-md px-4 text-xs font-medium transition-colors ${
+                className={`h-8 rounded-md px-4 text-xs font-medium transition-colors cursor-pointer ${
                   activeTab === "plan"
                     ? "bg-[#1a2312] text-fit-accent-alt"
                     : "text-[#8a92a0] hover:text-white"
@@ -164,7 +164,7 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
               <button
                 type="button"
                 onClick={() => handleTabChange("saved")}
-                className={`h-8 rounded-md px-4 text-xs font-medium transition-colors ${
+                className={`h-8 rounded-md px-4 text-xs font-medium transition-colors cursor-pointer ${
                   activeTab === "saved"
                     ? "bg-[#1a2312] text-fit-accent-alt"
                     : "text-[#8a92a0] hover:text-white"

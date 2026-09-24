@@ -51,18 +51,18 @@ const WorkoutCard = ({ workout }: WorkoutCardProps) => {
 
         {/* Stats */}
         <div className="mt-5 flex items-center gap-5 border-t border-fit-border pt-4 text-xs text-fit-muted">
-          <span className="flex items-center gap-1.5">
-            <Clock3 size={15} />
+          <span className="flex text-slate-200 items-center gap-1.5">
+            <Clock3 className="text-fit-accent" size={15} />
             {workout.duration} min
           </span>
 
-          <span className="flex items-center gap-1.5">
-            <Flame size={15} />
+          <span className="flex text-slate-200 items-center gap-1.5">
+            <Flame className="text-fit-accent" size={15} />
             {workout.caloriesBurned} kcal
           </span>
 
-          <span className="flex items-center gap-1.5">
-            <Star size={15} />
+          <span className="flex text-slate-200 items-center gap-1.5">
+            <Star className="text-fit-accent" size={15} />
             {workout.rating}
           </span>
         </div>

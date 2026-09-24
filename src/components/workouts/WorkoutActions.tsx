@@ -17,7 +17,7 @@ const WorkoutActions = ({ workout }: WorkoutActionsProps) => {
       <button
         type="button"
         onClick={() => addToPlan(workout)}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-fit-accent px-6 text-sm font-semibold text-fit-bg transition hover:brightness-95"
+        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-fit-accent px-6 text-sm font-semibold text-fit-bg transition hover:brightness-95 cursor-pointer"
       >
         <Plus size={16} />
         Add to today&apos;s plan
@@ -26,7 +26,7 @@ const WorkoutActions = ({ workout }: WorkoutActionsProps) => {
       <button
         type="button"
         onClick={() => saveWorkout(workout)}
-        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#374151] px-6 text-sm font-medium text-[#e5e7eb] transition hover:border-fit-muted hover:text-white"
+        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#374151] px-6 text-sm font-medium text-[#e5e7eb] transition hover:border-fit-muted hover:text-white cursor-pointer"
       >
         <Bookmark size={16} />
         Save for later
