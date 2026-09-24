@@ -1,16 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { useWorkout } from "@/context/WorkoutContext";
+import MyPlanWorkoutCard from "./MyPlanWorkoutCard";
 
 type PlanTab = "plan" | "saved";
 
-const MyPlanContent = () => {
+interface MyPlanContentProps {
+  initialTab: PlanTab;
+}
+
+const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
+  const router = useRouter();
+
   const { plan, saved } = useWorkout();
 
-  const [activeTab, setActiveTab] = useState<PlanTab>("plan");
+  const activeTab = initialTab;
 
   const totalMinutes = plan.reduce(
     (total, workout) => total + workout.duration,
@@ -23,6 +30,12 @@ const MyPlanContent = () => {
   );
 
   const activeWorkouts = activeTab === "plan" ? plan : saved;
+
+  const handleTabChange = (tab: PlanTab) => {
+    router.replace(`/my-plan?tab=${tab}`, {
+      scroll: false,
+    });
+  };
 
   return (
     <main className="min-h-screen bg-fit-bg">
@@ -70,14 +83,14 @@ const MyPlanContent = () => {
 
         {/* Tabs */}
         <div className="mt-6 flex">
-          <div className="flex h-10 items-center rounded-xl border border-fit-border bg-[#151921] p-1">
+          <div className="flex items-center gap-1 rounded-lg bg-[#151921] p-1">
             <button
               type="button"
-              onClick={() => setActiveTab("plan")}
-              className={`h-7.5 rounded-lg px-4 text-xs transition ${
+              onClick={() => handleTabChange("plan")}
+              className={`h-8 rounded-md px-4 text-xs font-medium transition-colors ${
                 activeTab === "plan"
-                  ? "border border-[#2b303d] bg-[#1f242d] font-bold text-white shadow-sm"
-                  : "border border-transparent font-medium text-[#8a92a0]"
+                  ? "bg-[#1a2312] text-fit-accent-alt"
+                  : "text-[#8a92a0] hover:text-white"
               }`}
             >
               Today&apos;s Plan
@@ -85,11 +98,11 @@ const MyPlanContent = () => {
 
             <button
               type="button"
-              onClick={() => setActiveTab("saved")}
-              className={`h-7.5 rounded-lg px-4 text-xs transition ${
+              onClick={() => handleTabChange("saved")}
+              className={`h-8 rounded-md px-4 text-xs font-medium transition-colors ${
                 activeTab === "saved"
-                  ? "border border-[#2b303d] bg-[#1f242d] font-bold text-white shadow-sm"
-                  : "border border-transparent font-medium text-[#8a92a0]"
+                  ? "bg-[#1a2312] text-fit-accent-alt"
+                  : "text-[#8a92a0] hover:text-white"
               }`}
             >
               Saved
@@ -117,10 +130,15 @@ const MyPlanContent = () => {
               </Link>
             </div>
           ) : (
-            <p className="text-sm text-[#8a92a0]">
-              {activeWorkouts.length} workout
-              {activeWorkouts.length > 1 ? "s" : ""} ready.
-            </p>
+            <div className="space-y-4">
+              {activeWorkouts.map((workout) => (
+                <MyPlanWorkoutCard
+                  key={workout.id}
+                  workout={workout}
+                  variant={activeTab}
+                />
+              ))}
+            </div>
           )}
         </section>
       </div>

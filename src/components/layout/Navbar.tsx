@@ -4,10 +4,17 @@ import { useWorkout } from "@/context/WorkoutContext";
 
 import { Dumbbell } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const currentTab = searchParams.get("tab");
+
+  const isPlanStatusActive = pathname === "/my-plan" && currentTab !== "saved";
+
+  const isSavedStatusActive = pathname === "/my-plan" && currentTab === "saved";
 
   const { plan, saved } = useWorkout();
 
@@ -58,24 +65,46 @@ const Navbar = () => {
         </nav>
 
         {/* Status */}
-        <Link
-          href="/my-plan"
-          className="flex items-center gap-3 text-xs sm:gap-5"
-        >
-          <span className="flex items-center gap-2 font-medium text-fit-muted-light">
+
+        <div className="flex items-center gap-3 text-xs sm:gap-5">
+          {/* Plan */}
+          <Link
+            href="/my-plan?tab=plan"
+            className={`flex items-center gap-2 font-medium transition-colors ${
+              isPlanStatusActive ? "text-white" : "text-fit-muted-light"
+            }`}
+          >
             Plan
-            <span className="inline-flex h-6 min-w-7 items-center justify-center rounded-md bg-fit-accent-alt px-1.5 leading-none font-bold text-black">
+            <span
+              className={`inline-flex h-6 min-w-7 items-center justify-center rounded-md border px-1.5 leading-none font-bold transition-colors ${
+                isPlanStatusActive
+                  ? "border-fit-accent-alt bg-fit-accent-alt text-black"
+                  : "border-[#2d313b] bg-transparent text-white"
+              }`}
+            >
               {planCount}
             </span>
-          </span>
+          </Link>
 
-          <span className="flex items-center gap-2 font-medium text-fit-muted">
+          {/* Saved */}
+          <Link
+            href="/my-plan?tab=saved"
+            className={`flex items-center gap-2 font-medium transition-colors ${
+              isSavedStatusActive ? "text-white" : "text-fit-muted"
+            }`}
+          >
             Saved
-            <span className="inline-flex h-6 min-w-7 items-center justify-center rounded-md border border-[#2d313b] px-1.5 leading-none text-white">
+            <span
+              className={`inline-flex h-6 min-w-7 items-center justify-center rounded-md border px-1.5 leading-none font-bold transition-colors ${
+                isSavedStatusActive
+                  ? "border-fit-accent-alt bg-fit-accent-alt text-black"
+                  : "border-[#2d313b] bg-transparent text-white"
+              }`}
+            >
               {savedCount}
             </span>
-          </span>
-        </Link>
+          </Link>
+        </div>
 
         {/* Mobile Navigation */}
         <nav className="flex w-full items-center justify-center gap-2 border-t border-[#1c1f26] pt-3 sm:hidden">
