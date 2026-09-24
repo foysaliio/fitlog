@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import toast from "react-hot-toast";
 
 import type { Workout } from "@/types/workout";
@@ -9,6 +15,7 @@ interface WorkoutContextType {
   plan: Workout[];
   saved: Workout[];
   completedIds: number[];
+  isHydrated: boolean;
 
   addToPlan: (workout: Workout) => void;
   saveWorkout: (workout: Workout) => void;
@@ -19,6 +26,21 @@ interface WorkoutContextType {
   markAsDone: (id: number) => void;
 }
 
+interface WorkoutState {
+  plan: Workout[];
+  saved: Workout[];
+  completedIds: number[];
+}
+
+const STORAGE_KEY = "fitlog-workout-state";
+const MAX_PLAN_ITEMS = 5;
+
+const initialState: WorkoutState = {
+  plan: [],
+  saved: [],
+  completedIds: [],
+};
+
 const WorkoutContext = createContext<WorkoutContextType | null>(null);
 
 interface WorkoutProviderProps {
@@ -26,9 +48,52 @@ interface WorkoutProviderProps {
 }
 
 export const WorkoutProvider = ({ children }: WorkoutProviderProps) => {
-  const [plan, setPlan] = useState<Workout[]>([]);
-  const [saved, setSaved] = useState<Workout[]>([]);
-  const [completedIds, setCompletedIds] = useState<number[]>([]);
+  const [workoutState, setWorkoutState] = useState<WorkoutState>(initialState);
+
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  const { plan, saved, completedIds } = workoutState;
+
+  // Load state from localStorage
+  useEffect(() => {
+    const loadStoredState = () => {
+      try {
+        const storedState = localStorage.getItem(STORAGE_KEY);
+
+        if (!storedState) {
+          setIsHydrated(true);
+          return;
+        }
+
+        const parsedState = JSON.parse(storedState) as Partial<WorkoutState>;
+
+        setWorkoutState({
+          plan: Array.isArray(parsedState.plan) ? parsedState.plan : [],
+          saved: Array.isArray(parsedState.saved) ? parsedState.saved : [],
+          completedIds: Array.isArray(parsedState.completedIds)
+            ? parsedState.completedIds
+            : [],
+        });
+      } catch {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+
+      setIsHydrated(true);
+    };
+
+    const timeoutId = window.setTimeout(loadStoredState, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
+
+  // Save state to localStorage
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(workoutState));
+  }, [workoutState, isHydrated]);
 
   const addToPlan = (workout: Workout) => {
     const alreadyAdded = plan.some((item) => item.id === workout.id);
@@ -38,7 +103,15 @@ export const WorkoutProvider = ({ children }: WorkoutProviderProps) => {
       return;
     }
 
-    setPlan((currentPlan) => [...currentPlan, workout]);
+    if (plan.length >= MAX_PLAN_ITEMS) {
+      toast.error("Today's plan can have up to 5 workouts");
+      return;
+    }
+
+    setWorkoutState((current) => ({
+      ...current,
+      plan: [...current.plan, workout],
+    }));
 
     toast.success("Added to today's plan");
   };
@@ -51,23 +124,34 @@ export const WorkoutProvider = ({ children }: WorkoutProviderProps) => {
       return;
     }
 
-    setSaved((currentSaved) => [...currentSaved, workout]);
+    setWorkoutState((current) => ({
+      ...current,
+      saved: [...current.saved, workout],
+    }));
 
     toast.success("Saved for later");
   };
 
   const removeFromPlan = (id: number) => {
-    setPlan((currentPlan) => currentPlan.filter((item) => item.id !== id));
+    setWorkoutState((current) => ({
+      ...current,
 
-    setCompletedIds((current) =>
-      current.filter((workoutId) => workoutId !== id),
-    );
+      plan: current.plan.filter((item) => item.id !== id),
+
+      completedIds: current.completedIds.filter(
+        (workoutId) => workoutId !== id,
+      ),
+    }));
 
     toast.success("Removed from today's plan");
   };
 
   const removeFromSaved = (id: number) => {
-    setSaved((currentSaved) => currentSaved.filter((item) => item.id !== id));
+    setWorkoutState((current) => ({
+      ...current,
+
+      saved: current.saved.filter((item) => item.id !== id),
+    }));
 
     toast.success("Removed from saved workouts");
   };
@@ -80,7 +164,11 @@ export const WorkoutProvider = ({ children }: WorkoutProviderProps) => {
       return;
     }
 
-    setCompletedIds((current) => [...current, id]);
+    setWorkoutState((current) => ({
+      ...current,
+
+      completedIds: [...current.completedIds, id],
+    }));
 
     toast.success("Workout marked as done");
   };
@@ -91,6 +179,7 @@ export const WorkoutProvider = ({ children }: WorkoutProviderProps) => {
         plan,
         saved,
         completedIds,
+        isHydrated,
         addToPlan,
         saveWorkout,
         removeFromPlan,

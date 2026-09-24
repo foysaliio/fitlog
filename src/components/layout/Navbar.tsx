@@ -1,14 +1,25 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { useWorkout } from "@/context/WorkoutContext";
 
 import { Dumbbell } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
+const emptySubscribe = () => {
+  return () => {};
+};
+
 const Navbar = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const isClient = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
   const currentTab = searchParams.get("tab");
 
@@ -16,10 +27,12 @@ const Navbar = () => {
 
   const isSavedStatusActive = pathname === "/my-plan" && currentTab === "saved";
 
-  const { plan, saved } = useWorkout();
+  const { plan, saved, isHydrated } = useWorkout();
 
   const planCount = plan.length;
   const savedCount = saved.length;
+
+  const showWorkoutCounts = isClient && isHydrated;
 
   const isWorkoutActive = pathname === "/" || pathname.startsWith("/workouts");
 
@@ -65,7 +78,6 @@ const Navbar = () => {
         </nav>
 
         {/* Status */}
-
         <div className="flex items-center gap-3 text-xs sm:gap-5">
           {/* Plan */}
           <Link
@@ -82,7 +94,7 @@ const Navbar = () => {
                   : "border-[#2d313b] bg-transparent text-white"
               }`}
             >
-              {planCount}
+              {showWorkoutCounts ? planCount : null}
             </span>
           </Link>
 
@@ -101,7 +113,7 @@ const Navbar = () => {
                   : "border-[#2d313b] bg-transparent text-white"
               }`}
             >
-              {savedCount}
+              {showWorkoutCounts ? savedCount : null}
             </span>
           </Link>
         </div>
