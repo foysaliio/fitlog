@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ChevronDown, Check } from "lucide-react";
+import { Check, ChevronDown, LoaderCircle } from "lucide-react";
 
 import { useWorkout } from "@/context/WorkoutContext";
 import MyPlanWorkoutCard from "./MyPlanWorkoutCard";
@@ -19,7 +19,7 @@ interface MyPlanContentProps {
 const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
   const router = useRouter();
 
-  const { plan, saved } = useWorkout();
+  const { plan, saved, isHydrated } = useWorkout();
 
   const [sortBy, setSortBy] = useState<SortOption>("duration");
 
@@ -33,22 +33,18 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
 
   const activeTab = initialTab;
 
-  // Active tab wise workout list
   const activeWorkouts = activeTab === "plan" ? plan : saved;
 
-  // Active tab wise total minutes
   const totalMinutes = activeWorkouts.reduce(
     (total, workout) => total + workout.duration,
     0,
   );
 
-  // Active tab wise total calories
   const totalCalories = activeWorkouts.reduce(
     (total, workout) => total + workout.caloriesBurned,
     0,
   );
 
-  // Sort a copied array so context state is never mutated
   const sortedWorkouts = [...activeWorkouts].sort((a, b) => {
     if (sortBy === "duration") {
       return a.duration - b.duration;
@@ -66,6 +62,43 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
       scroll: false,
     });
   };
+
+  // Wait until localStorage state is ready
+  if (!isHydrated) {
+    return (
+      <main className="min-h-screen bg-fit-bg">
+        <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-12">
+          {/* Page Heading */}
+          <div>
+            <h1 className="font-display text-[30px] leading-[1.2] font-bold tracking-[-0.75px] text-white uppercase">
+              My Plan
+            </h1>
+
+            <p className="mt-2 text-sm text-[#8a92a0]">
+              Cap of five lifts for today. Finish them, then load more.
+            </p>
+          </div>
+
+          {/* Loading State */}
+          <div className="mt-6 flex min-h-80 flex-col items-center justify-center rounded-2xl border border-fit-border bg-[#13161d]">
+            <LoaderCircle
+              size={30}
+              strokeWidth={1.8}
+              className="animate-spin text-fit-accent-alt"
+            />
+
+            <p className="mt-4 text-sm font-medium text-fit-muted-light">
+              Loading workouts...
+            </p>
+
+            <p className="mt-1 text-xs text-[#8a92a0]">
+              Preparing your workout plan.
+            </p>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-fit-bg">
@@ -111,7 +144,6 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
           </div>
         </section>
 
-        {/* Tabs and Sort */}
         {/* Tabs and Sort */}
         <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           {/* Tabs */}
@@ -171,7 +203,6 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
                 />
               </button>
 
-              {/* Dropdown Menu */}
               {isSortOpen && (
                 <div className="absolute right-0 top-[calc(100%+6px)] z-40 w-full overflow-hidden rounded-xl border border-[#343944] bg-[#171a21] shadow-xl">
                   {(["duration", "calories", "rating"] as SortOption[]).map(
