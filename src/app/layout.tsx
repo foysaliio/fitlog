@@ -5,6 +5,7 @@ import "./globals.css";
 import ToasterProvider from "@/components/ToasterProvider";
 import Navbar from "@/components/layout/Navbar";
 import { WorkoutProvider } from "@/context/WorkoutContext";
+import Footer from "@/components/layout/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -44,6 +45,7 @@ export default function RootLayout({
             <Navbar />
           </Suspense>
           {children}
+          <Footer />
         </WorkoutProvider>
         <ToasterProvider />
       </body>
