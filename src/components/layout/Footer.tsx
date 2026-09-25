@@ -1,16 +1,9 @@
-"use client";
-
-import { ArrowUp, Dumbbell } from "lucide-react";
+import { Dumbbell } from "lucide-react";
 import Link from "next/link";
 
-const Footer = () => {
-  const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+import ScrollToTopButton from "./ScrollToTopButton";
 
+const Footer = () => {
   return (
     <footer className="mt-5 border-t border-[#1a1d24] bg-[#090a0d] py-7">
       <div className="container relative mx-auto flex w-full flex-col items-center gap-4 px-6 text-center sm:flex-row sm:justify-between sm:pr-20 sm:text-left">
@@ -28,15 +21,8 @@ const Footer = () => {
           © 2026 FitLog — Workout Library. Train hard, log honest.
         </p>
 
-        {/* Scroll To Top */}
-        <button
-          type="button"
-          onClick={handleScrollToTop}
-          aria-label="Scroll to top"
-          className="inline-flex size-10 cursor-pointer items-center justify-center rounded-lg border border-[#2d313b] bg-[#111317] text-fit-muted transition-all  hover:translate-y-[-55%] hover:border-fit-accent-alt hover:bg-[#1a2312] hover:text-fit-accent-alt sm:absolute sm:top-1/2 sm:right-6 sm:-translate-y-1/2"
-        >
-          <ArrowUp size={17} strokeWidth={2} />
-        </button>
+        {/* Interactive Client Component */}
+        <ScrollToTopButton />
       </div>
     </footer>
   );

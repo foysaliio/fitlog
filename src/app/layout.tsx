@@ -45,8 +45,8 @@ export default function RootLayout({
             <Navbar />
           </Suspense>
           {children}
-          <Footer />
         </WorkoutProvider>
+        <Footer />
         <ToasterProvider />
       </body>
     </html>
