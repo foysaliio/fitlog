@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
 
   images: {
+    minimumCacheTTL: 86400,
+
     remotePatterns: [
       {
         protocol: "https",

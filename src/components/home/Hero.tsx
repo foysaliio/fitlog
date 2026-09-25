@@ -38,7 +38,7 @@ const Hero = () => {
             alt="Athlete training in the gym"
             width={334}
             height={334}
-            priority
+            preload
             className="h-auto w-full max-w-83.5 object-cover"
           />
         </div>

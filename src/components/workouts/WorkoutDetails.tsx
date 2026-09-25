@@ -27,7 +27,7 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
             src={workout.image}
             alt={workout.name}
             fill
-            priority
+            preload
             sizes="(max-width: 1023px) 100vw, 50vw"
             className="object-cover"
           />
