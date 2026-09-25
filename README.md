@@ -4,49 +4,48 @@
 
 ### Workout Library & Personal Training Planner
 
-A responsive workout discovery and planning experience built with Next.js, TypeScript, and Tailwind CSS.
+A responsive workout discovery and planning app built with Next.js, TypeScript, and Tailwind CSS.
 
-[Live Demo](https://fitlog-fit.vercel.app) · [Source Code](https://github.com/foysaliio/fitlog)
+[**Live Demo**](https://fitlog-fit.vercel.app) · [**Source Code**](https://github.com/foysaliio/fitlog)
 
 <br />
 
-![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React-19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 </div>
 
 ---
 
-## Overview
+## About FitLog
 
-**FitLog** is a workout library and personal planning application designed around a simple idea: discover a workout, understand it quickly, and organize what you want to train.
+**FitLog** is a workout library and personal training planner built around a simple workflow:
 
-Users can browse exercises, open detailed workout information, create a daily plan, save workouts for later, track workout totals, sort their collections, mark exercises as completed, and keep their progress available after refresh.
+**discover → review → plan → complete**
 
-The interface is fully responsive and follows a focused dark fitness aesthetic across mobile, tablet, and desktop screens.
+Users can explore workouts, open detailed exercise guides, build a daily routine, save workouts for later, track workout totals, and keep their selections available across page refreshes.
 
-## Highlights
+The interface follows a focused dark fitness aesthetic and is fully responsive across mobile, tablet, and desktop devices.
 
-- Browse a complete workout library from an external API
-- Search workouts by **name** or **muscle group**
-- Open dedicated dynamic pages for individual workouts
-- View equipment, difficulty, sets, reps, calories, rating, and instructions
-- Build a personalized **Today's Plan**
-- Limit the daily plan to a maximum of **5 workouts**
-- Save unlimited workouts for later
-- Prevent duplicate Plan and Saved entries
-- View live exercise, duration, and calorie totals
-- Sort workouts by **Duration**, **Calories**, or **Rating**
-- Mark planned workouts as completed
-- Remove workouts from Plan or Saved collections
-- Preserve workout state with Local Storage
-- Navigate directly between Plan and Saved views
-- Receive toast feedback for important actions
-- Handle empty states, loading states, errors, and invalid routes
-- Responsive experience across mobile, tablet, and desktop
+---
+
+## What You Can Do
+
+| Feature                | Description                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| **Explore Workouts**   | Browse a responsive library of API-powered exercises                         |
+| **Search**             | Find workouts by name or muscle group                                        |
+| **View Details**       | Review equipment, difficulty, sets, reps, calories, rating, and instructions |
+| **Build a Daily Plan** | Add up to five workouts to Today's Plan                                      |
+| **Save for Later**     | Keep workouts in a separate Saved collection                                 |
+| **Track Totals**       | See live exercise, duration, and calorie statistics                          |
+| **Sort Workouts**      | Sort by Duration, Calories, or Rating                                        |
+| **Mark as Done**       | Track completed workouts from the daily plan                                 |
+| **Persist Progress**   | Keep Plan, Saved, and completion state after refresh                         |
+| **Manage Workouts**    | Remove items, prevent duplicates, and navigate directly to details           |
 
 ---
 
@@ -54,97 +53,114 @@ The interface is fully responsive and follows a focused dark fitness aesthetic a
 
 ### Workout Library
 
-The home page presents the available workouts in a responsive card-based library.
+The main library presents all available workouts in a responsive card layout.
 
-Each workout card includes:
+Each workout includes:
 
-- Workout image
+- Exercise image
 - Muscle group tags
 - Workout name
-- Equipment
+- Required equipment
 - Duration
 - Calories burned
 - Rating
 
-The library also includes live search, allowing workouts to be filtered by workout name or muscle group.
+A live search field allows users to quickly filter workouts by **name** or **muscle group**.
 
 ### Workout Details
 
-Every workout has its own dynamic details page.
-
-Users can review:
+Every workout has its own dynamic details page with:
 
 - Description
-- Muscle groups
+- Target muscle groups
 - Equipment
 - Difficulty
-- Sets
-- Repetitions
+- Sets and repetitions
 - Duration
 - Calories
 - Rating
 - Step-by-step instructions
 
-From the same page, the workout can be added to **Today's Plan** or **Saved for Later**.
+From the details page, a workout can be added to **Today's Plan** or **Saved for Later**.
 
 ### Today's Plan
 
-Today's Plan is designed for focused daily training.
+Today's Plan is built for focused daily training.
 
 Users can:
 
-- Add up to 5 workouts
-- View total exercises
-- View total workout duration
-- View total calories
-- Sort the current list
-- Mark workouts as done
+- Add up to **5 workouts**
+- View live workout totals
+- Sort the current plan
+- Mark exercises as done
 - Open workout details
-- Remove workouts from the plan
+- Remove exercises from the plan
 
-Once the five-workout limit is reached, additional workouts cannot be added until an existing workout is removed.
+Once five workouts have been added, the plan is locked until an existing workout is removed.
 
 ### Saved Workouts
 
-The Saved section works as a personal workout collection for future use.
+The Saved section acts as a personal exercise collection.
 
 Users can:
 
-- Save workouts without adding them to the daily plan
-- Store as many workouts as needed
-- Sort the saved collection
+- Save workouts independently from Today's Plan
+- Store multiple workouts without a daily limit
+- Sort saved exercises
 - Open workout details
 - Remove saved workouts
-- View statistics for the active Saved tab
+- View statistics for the active collection
+
+---
+
+## Thoughtful UX
+
+FitLog includes a number of smaller details that make the overall experience feel complete:
+
+- Active navigation states
+- Live Plan and Saved counters
+- Duplicate workout prevention
+- Disabled states for already-added workouts
+- Five-workout plan limit
+- Completed workout states
+- Toast notifications
+- Search empty state
+- Plan and Saved empty states
+- Loading indicators and skeletons
+- Custom error interface
+- Custom 404 page
+- Smooth scroll behavior
+- Scroll-to-top control
+- Persistent client state
 
 ---
 
 ## Tech Stack
 
-| Technology          | Used For                                      |
+| Technology          | Role                                          |
 | ------------------- | --------------------------------------------- |
-| **Next.js 16**      | App Router, routing, rendering, data fetching |
-| **React 19**        | Interactive UI and component architecture     |
-| **TypeScript**      | Type-safe development                         |
+| **Next.js 16**      | App Router, rendering, routing, data fetching |
+| **React 19**        | Component architecture and interactivity      |
+| **TypeScript**      | Type-safe application development             |
 | **Tailwind CSS 4**  | Responsive styling                            |
-| **DaisyUI**         | Utility UI support                            |
+| **DaisyUI**         | Tailwind utility components                   |
 | **Lucide React**    | Interface icons                               |
-| **React Hot Toast** | User feedback and notifications               |
-| **Local Storage**   | Persisting Plan, Saved, and completed state   |
-| **Vercel**          | Production deployment                         |
+| **React Hot Toast** | Action feedback and notifications             |
+| **Local Storage**   | Persistent workout state                      |
+| **Vercel**          | Deployment                                    |
 
 ---
 
-## Application Routes
+## Routes
 
-| Route                | Purpose                       |
-| -------------------- | ----------------------------- |
-| `/`                  | Home page and workout library |
-| `/workouts/[id]`     | Dynamic workout details       |
-| `/my-plan?tab=plan`  | Today's Plan                  |
-| `/my-plan?tab=saved` | Saved Workouts                |
+| Route                | Description                |
+| -------------------- | -------------------------- |
+| `/`                  | Workout library            |
+| `/workouts/[id]`     | Individual workout details |
+| `/my-plan?tab=plan`  | Today's Plan               |
+| `/my-plan?tab=saved` | Saved Workouts             |
 
-Invalid pages and unavailable workout IDs are handled through a custom Not Found experience.
+Invalid routes and unavailable workout IDs are handled through a dedicated Not Found experience.
 
 ---
 
@@ -188,15 +204,15 @@ src/
 
 ## Data Source
 
-Workout information is loaded from the FitLog API.
+Workout data is loaded from the FitLog API.
 
-### All Workouts
+**All workouts**
 
 ```text
 https://api.abcz.workers.dev/api/fitlog
 ```
 
-### Single Workout
+**Single workout**
 
 ```text
 https://api.abcz.workers.dev/api/fitlog/:id
@@ -206,9 +222,9 @@ https://api.abcz.workers.dev/api/fitlog/:id
 
 ## State Management
 
-Workout-related user state is managed through React Context.
+Workout state is managed through React Context and persisted in Local Storage.
 
-The application maintains three main collections:
+The application keeps track of:
 
 ```text
 plan
@@ -216,37 +232,37 @@ saved
 completedIds
 ```
 
-These values are also persisted in Local Storage, allowing users to refresh or revisit the application without losing their current workout selections.
+This allows users to refresh or revisit the app without losing their current workout selections.
 
 ---
 
-## Getting Started
+## Run Locally
 
-### Clone the repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/foysaliio/fitlog.git
 ```
 
-### Enter the project directory
+Enter the project:
 
 ```bash
 cd fitlog
 ```
 
-### Install dependencies
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-### Start the development server
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:3000
@@ -254,79 +270,33 @@ http://localhost:3000
 
 ---
 
-## Available Commands
+## Scripts
 
-```bash
-npm run dev
-```
-
-Starts the development server.
-
-```bash
-npm run lint
-```
-
-Runs ESLint.
-
-```bash
-npm run build
-```
-
-Creates a production build.
-
-```bash
-npm run start
-```
-
-Runs the production build locally.
+| Command         | Purpose                      |
+| --------------- | ---------------------------- |
+| `npm run dev`   | Start the development server |
+| `npm run lint`  | Run ESLint                   |
+| `npm run build` | Create a production build    |
+| `npm run start` | Run the production build     |
 
 ---
 
-## Responsive Design
+## Responsive Layout
 
-FitLog is designed to work across different screen sizes without changing the core experience.
+| Device      | Experience                                   |
+| ----------- | -------------------------------------------- |
+| **Mobile**  | Single-column, touch-friendly layout         |
+| **Tablet**  | Balanced multi-column interface              |
+| **Desktop** | Expanded workout grid and planning dashboard |
 
-| Device  | Layout                                          |
-| ------- | ----------------------------------------------- |
-| Mobile  | Single-column, touch-friendly interface         |
-| Tablet  | Balanced multi-column layouts                   |
-| Desktop | Full workout grid and expanded dashboard layout |
-
-Navigation, workout cards, details, plan controls, statistics, tabs, sorting, footer, and empty states all adapt to the available screen size.
-
----
-
-## UX Details
-
-Several small interactions are included to make the application feel complete:
-
-- Active navigation indicators
-- Live Plan and Saved counters
-- Search result empty state
-- Plan and Saved duplicate prevention
-- Disabled state for already-added workouts
-- Disabled state when the daily plan reaches five workouts
-- Completion state for finished exercises
-- Smooth scroll interactions
-- Loading skeletons
-- Toast notifications
-- Custom error screen
-- Custom 404 screen
-- Scroll-to-top control
-
----
-
-## Author
-
-**Foysal Hossien**
-
-Frontend Developer  
-GitHub: [foysaliio](https://github.com/foysaliio)
+Every major part of the application—including navigation, cards, workout details, tabs, statistics, actions, empty states, and footer—is responsive.
 
 ---
 
 <div align="center">
 
-**Built with Next.js, TypeScript, and Tailwind CSS**
+### Train with intent. Log every set.
+
+[**Open FitLog →**](https://fitlog-fit.vercel.app)
 
 </div>
