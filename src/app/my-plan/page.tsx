@@ -1,15 +1,11 @@
+import { Suspense } from "react";
+
 import MyPlanContent from "@/components/my-plan/MyPlanContent";
 
-interface MyPlanPageProps {
-  searchParams: Promise<{
-    tab?: string;
-  }>;
-}
-
-export default async function MyPlanPage({ searchParams }: MyPlanPageProps) {
-  const { tab } = await searchParams;
-
-  const initialTab = tab === "saved" ? "saved" : "plan";
-
-  return <MyPlanContent initialTab={initialTab} />;
+export default function MyPlanPage() {
+  return (
+    <Suspense>
+      <MyPlanContent />
+    </Suspense>
+  );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Check, ChevronDown, LoaderCircle } from "lucide-react";
 
@@ -12,12 +12,10 @@ type PlanTab = "plan" | "saved";
 
 type SortOption = "duration" | "calories" | "rating";
 
-interface MyPlanContentProps {
-  initialTab: PlanTab;
-}
-
-const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
+const MyPlanContent = () => {
   const router = useRouter();
+
+  const searchParams = useSearchParams();
 
   const { plan, saved, isHydrated } = useWorkout();
 
@@ -31,7 +29,8 @@ const MyPlanContent = ({ initialTab }: MyPlanContentProps) => {
     rating: "Rating",
   };
 
-  const activeTab = initialTab;
+  const activeTab: PlanTab =
+    searchParams.get("tab") === "saved" ? "saved" : "plan";
 
   const activeWorkouts = activeTab === "plan" ? plan : saved;
 
